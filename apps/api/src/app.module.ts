@@ -8,6 +8,7 @@ import {
   DATABASE_CONNECTION,
   DatabaseModule,
 } from 'src/core/database/db.module';
+import { UsersModule } from './resources/users/users.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import {
       }),
       inject: [DATABASE_CONNECTION],
     }),
+    UsersModule,
   ],
   controllers: [],
   providers: [],
