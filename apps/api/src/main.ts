@@ -5,12 +5,15 @@ import { apiReference } from '@scalar/nestjs-api-reference';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
+const API_PREFIX = 'api';
+
 async function bootstrap() {
   const PORT = process.env.PORT ?? 3001;
 
   const app = await NestFactory.create(AppModule, { bodyParser: false });
 
   app.use(cookieParser());
+  app.setGlobalPrefix(API_PREFIX);
 
   const config = new DocumentBuilder()
     .setTitle('Better Auth API')
