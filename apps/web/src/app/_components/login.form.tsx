@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import SocialProvider from "src/app/_components/social-provider";
 import { Button } from "src/components/ui/button";
 import { Card, CardContent } from "src/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "src/components/ui/form";
@@ -58,6 +59,8 @@ function LoginForm() {
         />
 
         <Button className="w-full" type="submit">Login</Button>
+        <hr />
+        <SocialProvider />
       </Form>
     </form>
       </CardContent>
