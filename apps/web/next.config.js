@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${this.serverRuntimeConfig.apiUrl}/api/:path*`,
+        destination: `https://better-auth-deep-dive.onrender.com/api/:path*`,
       },
     ];
   },
