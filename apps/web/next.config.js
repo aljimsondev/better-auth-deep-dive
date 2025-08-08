@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverRuntimeConfig: {
+    apiUrl: process.env.API_URL || 'http://localhost:3000',
+  },
   rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.API_URL || 'http://localhost:3000'}/api/:path*`,
+        destination: `${this.serverRuntimeConfig.apiUrl}/api/:path*`,
       },
     ];
   },
