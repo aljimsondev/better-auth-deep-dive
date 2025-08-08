@@ -4,8 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import { DATABASE_CONNECTION } from 'src/core/database/db.connection';
-import { DatabaseModule } from 'src/core/database/db.module';
+import {
+  DATABASE_CONNECTION,
+  DatabaseModule,
+} from 'src/core/database/db.module';
 
 @Module({
   imports: [
