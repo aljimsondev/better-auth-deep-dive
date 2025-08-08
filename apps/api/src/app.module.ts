@@ -1,6 +1,6 @@
 import { AuthGuard, AuthModule } from '@mguay/nestjs-better-auth';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
@@ -17,14 +17,27 @@ import { UsersModule } from './resources/users/users.module';
     ConfigModule.forRoot(),
     DatabaseModule,
     AuthModule.forRootAsync({
-      imports: [DatabaseModule],
-      useFactory: (database: NodePgDatabase) => ({
+      imports: [DatabaseModule, ConfigModule],
+      useFactory: (database: NodePgDatabase, configService: ConfigService) => ({
         auth: betterAuth({
           database: drizzleAdapter(database, { provider: 'pg' }),
           trustedOrigins: TRUSTED_ORIGINS,
+
+          // enable email signin
+          emailAndPassword: {
+            enabled: true,
+          },
+          // enable social signin
+          socialProviders: {
+            github: {
+              enabled: true,
+              clientId: configService.getOrThrow('GITHUB_CLIENT_ID'),
+              clientSecret: configService.getOrThrow('GITHUB_CLIENT_SECRET'),
+            },
+          },
         }),
       }),
-      inject: [DATABASE_CONNECTION],
+      inject: [DATABASE_CONNECTION, ConfigService],
     }),
     UsersModule,
   ],
