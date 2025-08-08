@@ -6,7 +6,11 @@
         "name": "next"
       }
     ],
-    "declaration": false
+    "declaration": false,
+    "paths": {
+      "src/*":["./src/*"],
+      "lib/*":["./src/lib/*"]
+    }
   },
   "include": [
     "**/*.ts",
