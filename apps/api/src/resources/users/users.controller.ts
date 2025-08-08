@@ -25,7 +25,15 @@ export class UsersController {
   @Post('login')
   @ApiBody({
     type: SignInDto,
-    description: 'User login data',
+    description: `Internal endpoint for signing-in using email provider! 
+    <br/>
+    Note: This is for visualization purposes only!
+    <br/>
+    You can view their documentation about the usage and integration in their official website!
+    <br />
+    <hr/>
+    Official Endpoint:
+    <code>/api/auth/sign-in/email</code>`,
     required: true,
     examples: {
       validUser: {
@@ -92,7 +100,15 @@ export class UsersController {
   @Post('sign-up')
   @ApiBody({
     type: SignUpDto,
-    description: 'User signup data',
+    description: `Internal endpoint for signing-up using email provider! 
+    <br/>
+    Note: This is for visualization purposes only!
+    <br/>
+    You can view their documentation about the usage and integration in their official website!
+    <br />
+    <hr/>
+    Official Endpoint:
+    <code>/api/auth/sign-up/email</code>`,
     required: true,
     examples: {
       validUser: {
@@ -157,6 +173,17 @@ export class UsersController {
     }
   }
   @Post('sign-out')
+  @ApiBody({
+    description: `Internal endpoint for signing-out! 
+    <br/>
+    Note: This is for visualization purposes only!
+    <br/>
+    You can view their documentation about the usage and integration in their official website!
+    <br />
+    <hr/>
+    Official Endpoint:
+    <code>/api/auth/sign-out</code>`,
+  })
   async signOut(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
