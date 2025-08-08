@@ -24,6 +24,7 @@ import { UsersModule } from './resources/users/users.module';
           trustedOrigins: [
             ...TRUSTED_ORIGINS,
             configService.getOrThrow('DEPLOYMENT_URL'),
+            configService.getOrThrow('DEPLOYMENT_CLIENT_URL'),
           ],
 
           // enable email signin
