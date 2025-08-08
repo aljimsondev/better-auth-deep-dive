@@ -4,6 +4,7 @@ const nextConfig = {
     apiUrl: process.env.API_URL || 'http://localhost:3000',
   },
   rewrites() {
+    console.log(this.serverRuntimeConfig);
     return [
       {
         source: '/api/:path*',
