@@ -2,12 +2,15 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/nestjs-api-reference';
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const PORT = process.env.PORT ?? 3001;
 
   const app = await NestFactory.create(AppModule, { bodyParser: false });
+
+  app.use(cookieParser());
 
   const config = new DocumentBuilder()
     .setTitle('Better Auth API')
