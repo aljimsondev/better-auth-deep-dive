@@ -18,36 +18,46 @@ import { UsersModule } from './resources/users/users.module';
     DatabaseModule,
     AuthModule.forRootAsync({
       imports: [DatabaseModule, ConfigModule],
-      useFactory: (database: NodePgDatabase, configService: ConfigService) => ({
-        auth: betterAuth({
-          database: drizzleAdapter(database, { provider: 'pg' }),
-          advanced: {
-            crossSubDomainCookies: {
-              enabled: true,
-              domain: configService.getOrThrow('DEPLOYMENT_CLIENT_URL'),
-            },
-            useSecureCookies: Boolean(configService.get('USE_SECURE_COOKIES')),
-          },
-          trustedOrigins: [
-            ...TRUSTED_ORIGINS,
-            configService.getOrThrow('DEPLOYMENT_URL'),
-            configService.getOrThrow('DEPLOYMENT_CLIENT_URL'),
-          ],
+      useFactory: (database: NodePgDatabase, configService: ConfigService) => {
+        const clientUrl = configService.getOrThrow(
+          'DEPLOYMENT_CLIENT_URL',
+        ) as string;
 
-          // enable email signin
-          emailAndPassword: {
-            enabled: true,
-          },
-          // enable social signin
-          socialProviders: {
-            github: {
-              enabled: true,
-              clientId: configService.getOrThrow('GITHUB_CLIENT_ID'),
-              clientSecret: configService.getOrThrow('GITHUB_CLIENT_SECRET'),
+        const clientDomain = new URL(clientUrl).hostname;
+
+        return {
+          auth: betterAuth({
+            database: drizzleAdapter(database, { provider: 'pg' }),
+            advanced: {
+              crossSubDomainCookies: {
+                enabled: true,
+                domain: clientDomain,
+              },
+              useSecureCookies: Boolean(
+                configService.get('USE_SECURE_COOKIES'),
+              ),
             },
-          },
-        }),
-      }),
+            trustedOrigins: [
+              ...TRUSTED_ORIGINS,
+              configService.getOrThrow('DEPLOYMENT_URL'),
+              clientUrl,
+            ],
+
+            // enable email signin
+            emailAndPassword: {
+              enabled: true,
+            },
+            // enable social signin
+            socialProviders: {
+              github: {
+                enabled: true,
+                clientId: configService.getOrThrow('GITHUB_CLIENT_ID'),
+                clientSecret: configService.getOrThrow('GITHUB_CLIENT_SECRET'),
+              },
+            },
+          }),
+        };
+      },
       inject: [DATABASE_CONNECTION, ConfigService],
     }),
     UsersModule,
