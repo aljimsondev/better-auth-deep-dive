@@ -26,7 +26,9 @@ import { UsersModule } from './resources/users/users.module';
               enabled: true,
               domain: configService.getOrThrow('DEPLOYMENT_CLIENT_URL'),
             },
-            useSecureCookies: Boolean(configService.get('NODE_ENV')),
+            useSecureCookies: Boolean(
+              configService.get('NODE_ENV') === 'production',
+            ),
           },
           trustedOrigins: [
             ...TRUSTED_ORIGINS,
