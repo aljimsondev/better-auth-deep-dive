@@ -21,6 +21,13 @@ import { UsersModule } from './resources/users/users.module';
       useFactory: (database: NodePgDatabase, configService: ConfigService) => ({
         auth: betterAuth({
           database: drizzleAdapter(database, { provider: 'pg' }),
+          advanced: {
+            crossSubDomainCookies: {
+              enabled: true,
+              domain: configService.getOrThrow('DEPLOYMENT_CLIENT_URL'),
+            },
+            useSecureCookies: Boolean(configService.get('NODE_ENV')),
+          },
           trustedOrigins: [
             ...TRUSTED_ORIGINS,
             configService.getOrThrow('DEPLOYMENT_URL'),
