@@ -6,7 +6,7 @@ function SocialProvider() {
     try {
       await authClient.signIn.social({
         provider: 'github',
-        callbackURL: '/?signin=true&provider=github',
+        callbackURL: `${process.env.NEXT_PUBLIC_CLIENT_URL}/?signin=true&provider=github`,
       });
     } catch (e: any) {
       alert(e?.message);
