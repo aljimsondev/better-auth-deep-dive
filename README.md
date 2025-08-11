@@ -44,7 +44,11 @@ DEPLOYMENT_URL=""
 
 ### Database Setup
 1. Ensure your PostgreSQL database is running
-2. Run drizzle scripts
+2. Run `generate-schema` script for generating necessary database schema
+   ```sh
+   npm run generate-schema
+   ```
+3. Run drizzle scripts
    - Generate from database schema, the output should be inside `drizzle` folder as specified in `drizzle.config.ts`
    ```sh
    npm run generate
