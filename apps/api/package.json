@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "generate": "drizzle-kit generate --config drizzle.config.ts",
-    "migrate": "drizzle-kit migrate --config drizzle.config.ts"
+    "migrate": "drizzle-kit migrate --config drizzle.config.ts",
+    "generate-schema": "npx @better-auth/cli generate --config=./src/core/auth/auth.ts"
   },
   "dependencies": {
     "@mguay/nestjs-better-auth": "^1.0.2",
